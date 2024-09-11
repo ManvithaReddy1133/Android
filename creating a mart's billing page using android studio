@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to D Mart"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeMessage"
+        android:hint="Your Name"/>
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"
+        android:hint="Item Name"/>
+
+    <EditText
+        android:id="@+id/itemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemName"
+        android:hint="Item Price"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/itemRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemPrice"
+        android:hint="Item Rate"
+        android:inputType="numberDecimal"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/paymentMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemRate"
+        android:hint="Payment Mode"/>
+
+    <RadioGroup
+        android:id="@+id/printBillingGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentMode"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/printYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:id="@+id/printNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/printBillingGroup"
+        android:text="Submit"/>
+
+</RelativeLayout>
+
+ 
