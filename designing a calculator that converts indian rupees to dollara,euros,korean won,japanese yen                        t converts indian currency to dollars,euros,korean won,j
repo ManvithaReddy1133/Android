@@ -1,0 +1,157 @@
+#xml file
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter amount in INR"
+        android:inputType="numberDecimal"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/usdButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amountEditText"
+        android:layout_marginTop="16dp"
+        android:text="Convert to USD" />
+
+    <Button
+        android:id="@+id/eurButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usdButton"
+        android:layout_marginTop="8dp"
+        android:text="Convert to EUR" />
+
+    <Button
+        android:id="@+id/krwButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eurButton"
+        android:layout_marginTop="8dp"
+        android:text="Convert to KRW" />
+
+    <Button
+        android:id="@+id/jpyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/krwButton"
+        android:layout_marginTop="8dp"
+        android:text="Convert to JPY" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jpyButton"
+        android:layout_marginTop="16dp"
+        android:text="Result will appear here"
+        android:textSize="18sp" />
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+# java activity file
+
+package com.example.currency;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText amountEditText;
+    private Button usdButton;
+    private Button eurButton;
+    private Button krwButton;
+    private Button jpyButton;
+    private TextView resultTextView;
+
+    // Exchange rates from INR to other currencies
+    private static final double INR_TO_USD = 0.012;
+    private static final double INR_TO_EUR = 0.011;
+    private static final double INR_TO_KRW = 15.99;
+    private static final double INR_TO_JPY = 1.76;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        amountEditText = findViewById(R.id.amountEditText);
+        usdButton = findViewById(R.id.usdButton);
+        eurButton = findViewById(R.id.eurButton);
+        krwButton = findViewById(R.id.krwButton);
+        jpyButton = findViewById(R.id.jpyButton);
+        resultTextView = findViewById(R.id.resultTextView);
+
+        usdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertCurrency(INR_TO_USD, "USD");
+            }
+        });
+
+        eurButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertCurrency(INR_TO_EUR, "EUR");
+            }
+        });
+
+        krwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertCurrency(INR_TO_KRW, "KRW");
+            }
+        });
+
+        jpyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertCurrency(INR_TO_JPY, "JPY");
+            }
+        });
+    }
+
+    private void convertCurrency(double exchangeRate, String currencyCode) {
+        String amountStr = amountEditText.getText().toString();
+        if (amountStr.isEmpty()) {
+            resultTextView.setText("Please enter an amount.");
+            return;
+        }
+
+        try {
+            double amount = Double.parseDouble(amountStr);
+            double convertedAmount = amount * exchangeRate;
+            resultTextView.setText(String.format("Converted amount: %.2f %s", convertedAmount, currencyCode));
+        } catch (NumberFormatException e) {
+            resultTextView.setText("Invalid input. Please enter a valid number.");
+        }
+    }
+}
+
+
+
+
+
+
+
