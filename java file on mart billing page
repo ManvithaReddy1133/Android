@@ -1,0 +1,81 @@
+package com.example.billingapp;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText userName, itemName, itemPrice, itemRate;
+    private AutoCompleteTextView paymentMode;
+    private RadioGroup printBillingGroup;
+    private Button submitButton;
+    private TextView welcomeMessage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI components
+        userName = findViewById(R.id.userName);
+        itemName = findViewById(R.id.itemName);
+        itemPrice = findViewById(R.id.itemPrice);
+        itemRate = findViewById(R.id.itemRate);
+        paymentMode = findViewById(R.id.paymentMode);
+        printBillingGroup = findViewById(R.id.printBillingGroup);
+        submitButton = findViewById(R.id.submitButton);
+        welcomeMessage = findViewById(R.id.welcomeMessage);
+
+        // Set up AutoCompleteTextView with payment modes
+        String[] paymentModes = {"Cash", "Debit", "Credit"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, paymentModes);
+        paymentMode.setAdapter(adapter);
+
+        // Set up button click listener
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitBillingInfo();
+            }
+        });
+    }
+
+    private void submitBillingInfo() {
+        // Get user inputs
+        String name = userName.getText().toString();
+        String itemNameText = itemName.getText().toString();
+        String itemPriceText = itemPrice.getText().toString();
+        String itemRateText = itemRate.getText().toString();
+        String payment = paymentMode.getText().toString();
+
+        // Get selected radio button for print billing
+        int selectedId = printBillingGroup.getCheckedRadioButtonId();
+        RadioButton printYes = findViewById(R.id.printYes);
+        RadioButton printNo = findViewById(R.id.printNo);
+
+        String printOption = "No";
+        if (selectedId == R.id.printYes) {
+            printOption = "Yes";
+        }
+
+        // Display or process billing information
+        String billingInfo = "Welcome to D Mart, " + name + "\n\n" +
+                             "Item Name: " + itemNameText + "\n" +
+                             "Item Price: " + itemPriceText + "\n" +
+                             "Item Rate: " + itemRateText + "\n" +
+                             "Payment Mode: " + payment + "\n" +
+                             "Print Billing: " + printOption;
+
+        // Show the billing information (use Toast to show completion message)
+        Toast.makeText(this, "Bill Submitted Successfully!\n" + billingInfo, Toast.LENGTH_LONG).show();
+    }
