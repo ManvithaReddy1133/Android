@@ -1,0 +1,185 @@
+#xml file
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Registration Form"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="59dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="184dp" />
+
+    <TextView
+        android:id="@+id/fname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Father Name"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="249dp" />
+
+    <TextView
+        android:id="@+id/details3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="342dp" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="175dp" />
+
+    <EditText
+        android:id="@+id/name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="241dp" />
+
+    <RadioGroup
+        android:id="@+id/GenderGroup"
+        android:layout_width="159dp"
+        android:layout_height="143dp"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="333dp">
+
+        <RadioButton
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/value2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/value3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/places"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="Place of birth"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="528dp" />
+
+    <EditText
+        android:id="@+id/name4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="502dp" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+#java activity file
+
+package com.example.registrationfrorm24;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+    EditText name,fname;
+    AutoCompleteTextView places;
+    RadioGroup rg;
+    RadioButton rb;
+    Button btn;
+    String[]Locations={"Banglore","Chennai","Delhi","Pune","Korea"};
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        name=findViewById(R.id.name);
+        fname=findViewById(R.id.fname);
+        places=findViewById(R.id.places);
+        btn=findViewById(R.id.submit);
+        ArrayAdapter adapter= new ArrayAdapter(this, android.R.layout.select_dialog_item,Locations);
+        places.setThreshold(1);
+        places.setAdapter(adapter);
+        rg=findViewById(R.id.GenderGroup);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group,int checkedId) {
+                rg=findViewById(checkedId);
+            }
+        });
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String res1="Name:"+name.getText().toString()+"\nFather Name:"+fname.getText().toString()+"\nGender: "+rb.getText()+"\nPlace of birth:"+places.getText().toString();
+                Toast.makeText(MainActivity.this,res1,Toast.LENGTH_SHORT).show();
+            }
+        });
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+}
